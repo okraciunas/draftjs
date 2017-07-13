@@ -1,8 +1,13 @@
 import React from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import { EditorState, RichUtils } from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
+import createUndoPlugin from 'draft-js-undo-plugin';
 import './App.css';
 
-class App extends React.Component {
+const undoPlugin = createUndoPlugin();
+const { UndoButton, RedoButton } = undoPlugin;
+
+export default class App extends React.Component {
   constructor() {
     super();
 
@@ -52,8 +57,10 @@ class App extends React.Component {
           context={this}
         />
         <Editor
+          ref={ element => this.editor = element }
           editorState={this.state.editorState}
           onChange={this._onChange}
+          plugins={[undoPlugin]}
           handleKeyCommand={this._handleKeyCommand}
         />
       </div>
@@ -79,6 +86,8 @@ const Toolbar = (props) => {
         action={props.context._underline}
         name="U"
       />
+      <UndoButton/>
+      <RedoButton/>
     </nav>
   );
 }
@@ -86,5 +95,3 @@ const Toolbar = (props) => {
 const ToolbarButton = (props) => {
   return <button className={props.className} onClick={props.action}>{props.name}</button>
 }
-
-export default App;
