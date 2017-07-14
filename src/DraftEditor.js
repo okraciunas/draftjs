@@ -2,22 +2,21 @@ import React from 'react';
 import { EditorState, RichUtils } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import createUndoPlugin from 'draft-js-undo-plugin';
-import './App.css';
+import Toolbar from './Toolbar';
 
 const undoPlugin = createUndoPlugin();
-const { UndoButton, RedoButton } = undoPlugin;
 
-export default class App extends React.Component {
+export default class DraftEditor extends React.Component {
   constructor() {
     super();
 
     this.state = { editorState: EditorState.createEmpty() };
     
-    this._onChange = this._onChange.bind(this);
-    this._handleKeyCommand = this._handleKeyCommand.bind(this);
-    this._bold = this._bold.bind(this);
-    this._italic = this._italic.bind(this);
-    this._underline = this._underline.bind(this);
+    this.onChange = this._onChange.bind(this);
+    this.handleKeyCommand = this._handleKeyCommand.bind(this);
+    this.bold = this._bold.bind(this);
+    this.italic = this._italic.bind(this);
+    this.underline = this._underline.bind(this);
   }
 
   _onChange(editorState) {
@@ -53,44 +52,18 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Toolbar
+         <Toolbar
           context={this}
+          plugin={undoPlugin}
         />
         <Editor
           editorState={this.state.editorState}
-          onChange={this._onChange}
           plugins={[undoPlugin]}
-          handleKeyCommand={this._handleKeyCommand}
+          onChange={this.onChange}
+          handleKeyCommand={this.handleKeyCommand}
+          blockRendererFn={this._blockRenderer}
         />
       </div>
     );
   }
-}
-
-const Toolbar = (props) => {
-  return (
-    <nav className="toolbar">
-      <ToolbarButton
-        className="bold"
-        action={props.context._bold}
-        name="B"
-      />
-      <ToolbarButton
-        className="italic"
-        action={props.context._italic}
-        name="I"
-      />
-      <ToolbarButton
-        className="underline"
-        action={props.context._underline}
-        name="U"
-      />
-      <UndoButton/>
-      <RedoButton/>
-    </nav>
-  );
-}
-
-const ToolbarButton = (props) => {
-  return <button className={props.className} onClick={props.action}>{props.name}</button>
 }

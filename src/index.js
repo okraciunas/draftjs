@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import DraftEditor from './DraftEditor';
+import './editor.css';
 
 ReactDOM.render(
-	<App />,
+	<DraftEditor />,
 	document.getElementById('root')
 );
