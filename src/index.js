@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DraftEditor from './DraftEditor';
-import './editor.css';
+import DraftEditor from './app/DraftEditor';
+import './css/editor.css';
 
 ReactDOM.render(
 	<DraftEditor />,

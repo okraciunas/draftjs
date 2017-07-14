@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ToolbarButton from './ToolbarButton';
 
 export default class Toolbar extends React.Component {
@@ -27,4 +28,9 @@ export default class Toolbar extends React.Component {
       </nav>
     )
   }
+}
+
+Toolbar.propTypes = {
+  context: PropTypes.object.isRequired,
+  plugin: PropTypes.object.isRequired
 }
