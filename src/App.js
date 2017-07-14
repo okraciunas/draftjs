@@ -57,7 +57,6 @@ export default class App extends React.Component {
           context={this}
         />
         <Editor
-          ref={ element => this.editor = element }
           editorState={this.state.editorState}
           onChange={this._onChange}
           plugins={[undoPlugin]}
